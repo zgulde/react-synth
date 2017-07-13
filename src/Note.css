@@ -5,11 +5,14 @@
 
 .Note button {
     display: inline-block;
-    width: 33.333333%;
-    color: white;
-    background: firebrick;
+    width: 50%;
     border: 1px solid black;
     padding: 5px 10px;
+}
+
+.Note button:active,
+.Note button:focus {
+    outline: 0;
 }
 
 .Note label {
@@ -23,3 +26,17 @@
     line-height: 1.3em;
 }
 
+.Note .controls {
+    display: inline-block;
+    width: 33.33%;
+}
+
+.Note .delete {
+    color: white;
+    background: firebrick;
+}
+
+.Note .play {
+    color: white;
+    background: navy;
+}

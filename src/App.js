@@ -79,6 +79,7 @@ class App extends Component {
         {this.state.notes.map((note, i) => {
           return <Note key={i}
             {...note}
+            play={this.playSound}
             deleteNote={() => this.deleteNote(i)}
             updatePitch={this.updateNote(i)}
             updateDuration={this.updateNote(i)} />;

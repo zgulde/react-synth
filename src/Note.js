@@ -167,7 +167,10 @@ const Note = (props) => {
         Duration
         <input name='duration' onChange={props.updateDuration} value={props.duration} type='number' />
       </label>
-      <button onClick={props.deleteNote}>Delete</button>
+      <div className="controls">
+        <button className="play" onClick={() => props.play(props)}>Play</button>
+        <button className="delete" onClick={props.deleteNote}>Delete</button>
+        </div>
     </div>
   );
 };
@@ -175,8 +178,6 @@ const Note = (props) => {
 Note.defaultProps = {
   pitch: 'A4',
   duration: 300,
-  updatePitch: () => null,
-  updateDuration: () => null,
 };
 
 export default Note;
