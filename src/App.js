@@ -48,8 +48,11 @@ class App extends Component {
   }
 
   playSound({pitch, duration, delay = 0}) {
-    duration = (this.state.bpm / 60) * 1000 * duration;
-    console.log(duration)
+    const beatsPerSecond = (60 / this.state.bpm);
+    const beatsPerMillisecond = beatsPerSecond * 1000;
+    // multiply by 4 because we are looking at quarter notes
+    duration = beatsPerMillisecond * 4 * duration;
+
     return new Promise((resolve, reject) => {
       const s = synth[this.state.synth];
       s.play({pitch, wait: delay});
