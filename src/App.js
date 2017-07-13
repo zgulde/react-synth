@@ -9,8 +9,7 @@ class App extends Component {
     super(props);
     this.playSound = this.playSound.bind(this);
     this.addNote = this.addNote.bind(this);
-    this.updateDuration = this.updateDuration.bind(this);
-    this.updatePitch = this.updatePitch.bind(this);
+    this.updateNote = this.updateNote.bind(this);
     this.playAll = this.playAll.bind(this);
     this.state = {
       notes: [
@@ -23,38 +22,22 @@ class App extends Component {
     };
   }
 
-  updatePitch(idx) {
+  updateNote(idx) {
     return (e) => {
       const {notes} = this.state;
       this.setState({
         notes: notes.map((note, i) => {
-          if (idx === i) {
-            return Object.assign(note, {pitch: e.target.value});
-          }
-          return note;
+          return idx === i
+            ? Object.assign(note, {[e.target.name]: e.target.value})
+            : note;
         }),
       });
     };
   }
 
   deleteNote(id) {
-    this.setState({
-      notes: this.state.notes.dropIf((_, i) => id === i),
-    });
-  }
-
-  updateDuration(idx) {
-    return (e) => {
-      const {notes} = this.state;
-      this.setState({
-        notes: notes.map((note, i) => {
-          if (idx === i) {
-            return Object.assign(note, {duration: e.target.value});
-          }
-          return note;
-        }),
-      });
-    };
+    const notes = this.state.notes.dropIf((_, i) => id === i);
+    this.setState({notes});
   }
 
   addNote() {
@@ -63,7 +46,6 @@ class App extends Component {
 
   playSound({pitch, duration, delay = 0}) {
     return new Promise((resolve, reject) => {
-      console.log('playSound promise!');
       const s = synth[this.state.synth];
       s.play({pitch, wait: delay});
       setTimeout(() => {
@@ -98,8 +80,8 @@ class App extends Component {
           return <Note key={i}
             {...note}
             deleteNote={() => this.deleteNote(i)}
-            updatePitch={this.updatePitch(i)}
-            updateDuration={this.updateDuration(i)} />;
+            updatePitch={this.updateNote(i)}
+            updateDuration={this.updateNote(i)} />;
         })}
         <button onClick={this.addNote}>Add Note</button>
       </div>
