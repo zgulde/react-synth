@@ -4,7 +4,13 @@ import {pitchesArray as pitches} from 'web-audio-daw';
 
 const Note = (props) => {
 
-  const noteDurations = [ '1', '1/2', '1/4', '1/8', '1/16' ];
+  const humanReadableDurations = [
+    [1, '1'],
+    [0.5, '1/2'],
+    [0.25, '1/4'],
+    [0.125, '1/8'],
+    [0.0625, '1/16'],
+  ];
 
   return (
     <div className='Note'>
@@ -17,10 +23,15 @@ const Note = (props) => {
       <p>
         Duration
       </p>
-      {noteDurations.map((noteDuration) => {
+      {humanReadableDurations.map(([duration, pretty]) => {
         return (
-          <label key={noteDuration} className='duration-radio'>{noteDuration}
-            <input name={`duration_${props.index}`} onChange={props.updateDuration} value={eval(noteDuration)} type='radio' />
+          <label key={duration} className='duration-radio'>{pretty}
+            <input
+              checked={props.duration == duration}
+              name={`duration_${props.index}`}
+              onChange={props.updateDuration}
+              value={duration}
+              type='radio' />
           </label>
         );
       })}
