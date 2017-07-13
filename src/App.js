@@ -72,17 +72,15 @@ class App extends Component {
   }
 
   playAll() {
-    let p = Promise.resolve();
+    this.setState({playing: true});
     const {notes} = this.state;
-    for(let i = 0; i < notes.length; i += 1) {
-      const {pitch, duration} = notes[i];
-      // const delay = i === 0 ? 0 : notes[i - 1].duration;
-      p = p.then(() => this.playSound({pitch, duration}));
-    }
+    const p = notes.rest().reduce((p, note) => {
+      return p.then(() => this.playSound(note));
+    }, this.playSound(notes.first()));
+    p.then(() => this.setState({playing: false}));
   }
 
   render() {
-    console.log(this.state.notes);
     return (
       <div className="App">
         <button disabled={this.state.playing} onClick={this.playAll}>Play</button>
