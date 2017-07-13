@@ -1,0 +1,25 @@
+.Note {
+    padding: 10px 0;
+    border: 1px solid black;
+}
+
+.Note button {
+    display: inline-block;
+    width: 33.333333%;
+    color: white;
+    background: firebrick;
+    border: 1px solid black;
+    padding: 5px 10px;
+}
+
+.Note label {
+    display: inline-block;
+    width: 33.33333%;
+}
+
+.Note label input,
+.Note label select {
+    display: inline-block;
+    line-height: 1.3em;
+}
+
