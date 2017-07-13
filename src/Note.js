@@ -14,27 +14,27 @@ const Note = (props) => {
 
   return (
     <div className='Note'>
-      <label>
+      <label className='pitch-select'>
         Note
         <select name='pitch' onChange={props.updatePitch} value={props.pitch}>
           {pitches.map(pitch => <option key={pitch}>{pitch}</option>)}
         </select>
       </label>
-      <p>
-        Duration
-      </p>
-      {humanReadableDurations.map(([duration, pretty]) => {
-        return (
-          <label key={duration} className='duration-radio'>{pretty}
-            <input
-              checked={props.duration == duration}
-              name={`duration_${props.index}`}
-              onChange={props.updateDuration}
-              value={duration}
-              type='radio' />
-          </label>
-        );
-      })}
+      <div className='duration-buttons'>
+        Duration <br />
+        {humanReadableDurations.map(([duration, pretty]) => {
+          return (
+            <label key={duration} className='duration-radio'>{pretty}
+              <input
+                checked={props.duration == duration}
+                name={`duration_${props.index}`}
+                onChange={props.updateDuration}
+                value={duration}
+                type='radio' />
+            </label>
+          );
+        })}
+      </div>
       <div className="controls">
         <button className="play" onClick={() => props.play(props)}>Play</button>
         <button className="delete" onClick={props.deleteNote}>Delete</button>

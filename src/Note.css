@@ -15,20 +15,27 @@
     outline: 0;
 }
 
-.Note label {
+.Note .pitch-select,
+.Note .duration-buttons,
+.Note .controls {
     display: inline-block;
-    width: 33.33333%;
 }
 
-.Note label input,
-.Note label select {
-    display: inline-block;
-    line-height: 1.3em;
+.Note .pitch-select {
+    width: 20%;
+}
+
+.Note .duration-buttons {
+    width: 40%;
 }
 
 .Note .controls {
+    width: 40%;
+}
+
+.Note label select {
     display: inline-block;
-    width: 33.33%;
+    line-height: 1.3em;
 }
 
 .Note .delete {
