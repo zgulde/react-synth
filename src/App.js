@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Note from './Note';
 import synth from './synth';
-import 'zgulde-lib';
 
 class App extends Component {
   constructor(props) {
