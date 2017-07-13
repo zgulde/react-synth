@@ -1,172 +1,29 @@
 import React from 'react';
 import './Note.css';
+import {pitchesArray as pitches} from 'web-audio-daw';
 
 const Note = (props) => {
+
+  const noteDurations = [ '1', '1/2', '1/4', '1/8', '1/16' ];
+
   return (
     <div className='Note'>
       <label>
         Note
         <select name='pitch' onChange={props.updatePitch} value={props.pitch}>
-          <option>A0</option>
-          <option>A#0</option>
-          <option>Bb0</option>
-          <option>B0</option>
-          <option>B#0</option>
-          <option>Cb1</option>
-          <option>C1</option>
-          <option>C#1</option>
-          <option>Db1</option>
-          <option>D1</option>
-          <option>D#1</option>
-          <option>Eb1</option>
-          <option>E1</option>
-          <option>Fb1</option>
-          <option>E#1</option>
-          <option>F1</option>
-          <option>F#1</option>
-          <option>Gb1</option>
-          <option>G1</option>
-          <option>G#1</option>
-          <option>Ab1</option>
-          <option>A1</option>
-          <option>A#1</option>
-          <option>Bb1</option>
-          <option>B1</option>
-          <option>Cb2</option>
-          <option>B#1</option>
-          <option>C2</option>
-          <option>C#2</option>
-          <option>Db2</option>
-          <option>D2</option>
-          <option>D#2</option>
-          <option>Eb2</option>
-          <option>E2</option>
-          <option>Fb2</option>
-          <option>E#2</option>
-          <option>F2</option>
-          <option>F#2</option>
-          <option>Gb2</option>
-          <option>G2</option>
-          <option>G#2</option>
-          <option>Ab2</option>
-          <option>A2</option>
-          <option>A#2</option>
-          <option>Bb2</option>
-          <option>B2</option>
-          <option>Cb3</option>
-          <option>B#2</option>
-          <option>C3</option>
-          <option>C#3</option>
-          <option>Db3</option>
-          <option>D3</option>
-          <option>D#3</option>
-          <option>Eb3</option>
-          <option>E3</option>
-          <option>Fb3</option>
-          <option>E#3</option>
-          <option>F3</option>
-          <option>F#3</option>
-          <option>Gb3</option>
-          <option>G3</option>
-          <option>G#3</option>
-          <option>Ab3</option>
-          <option>A3</option>
-          <option>A#3</option>
-          <option>Bb3</option>
-          <option>B3</option>
-          <option>Cb4</option>
-          <option>B#3</option>
-          <option>C4</option>
-          <option>C#4</option>
-          <option>Db4</option>
-          <option>D4</option>
-          <option>D#4</option>
-          <option>Eb4</option>
-          <option>E4</option>
-          <option>Fb4</option>
-          <option>E#4</option>
-          <option>F4</option>
-          <option>F#4</option>
-          <option>Gb4</option>
-          <option>G4</option>
-          <option>G#4</option>
-          <option>Ab4</option>
-          <option>A4</option>
-          <option>A#4</option>
-          <option>Bb4</option>
-          <option>B4</option>
-          <option>Cb5</option>
-          <option>B#4</option>
-          <option>C5</option>
-          <option>C#5</option>
-          <option>Db5</option>
-          <option>D5</option>
-          <option>D#5</option>
-          <option>Eb5</option>
-          <option>E5</option>
-          <option>Fb5</option>
-          <option>E#5</option>
-          <option>F5</option>
-          <option>F#5</option>
-          <option>Gb5</option>
-          <option>G5</option>
-          <option>G#5</option>
-          <option>Ab5</option>
-          <option>A5</option>
-          <option>A#5</option>
-          <option>Bb5</option>
-          <option>B5</option>
-          <option>Cb6</option>
-          <option>B#5</option>
-          <option>C6</option>
-          <option>C#6</option>
-          <option>Db6</option>
-          <option>D6</option>
-          <option>D#6</option>
-          <option>Eb6</option>
-          <option>Fb6</option>
-          <option>E6</option>
-          <option>E#6</option>
-          <option>F6</option>
-          <option>F#6</option>
-          <option>Gb6</option>
-          <option>G6</option>
-          <option>G#6</option>
-          <option>Ab6</option>
-          <option>A6</option>
-          <option>A#6</option>
-          <option>Bb6</option>
-          <option>B6</option>
-          <option>Cb7</option>
-          <option>B#6</option>
-          <option>C7</option>
-          <option>C#7</option>
-          <option>Db7</option>
-          <option>D7</option>
-          <option>D#7</option>
-          <option>Eb7</option>
-          <option>E7</option>
-          <option>Fb7</option>
-          <option>E#7</option>
-          <option>F7</option>
-          <option>F#7</option>
-          <option>Gb7</option>
-          <option>G7</option>
-          <option>G#7</option>
-          <option>Ab7</option>
-          <option>A7</option>
-          <option>A#7</option>
-          <option>Bb7</option>
-          <option>B7</option>
-          <option>Cb8</option>
-          <option>B#7</option>
-          <option>C8</option>
+          {pitches.map(pitch => <option key={pitch}>{pitch}</option>)}
         </select>
       </label>
-      <label>
+      <p>
         Duration
-        <input name='duration' onChange={props.updateDuration} value={props.duration} type='number' />
-      </label>
+      </p>
+      {noteDurations.map((noteDuration) => {
+        return (
+          <label key={noteDuration} className='duration-radio'>{noteDuration}
+            <input name={`duration_${props.index}`} onChange={props.updateDuration} value={eval(noteDuration)} type='radio' />
+          </label>
+        );
+      })}
       <div className="controls">
         <button className="play" onClick={() => props.play(props)}>Play</button>
         <button className="delete" onClick={props.deleteNote}>Delete</button>

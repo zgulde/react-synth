@@ -7,28 +7,31 @@ import 'zgulde-lib';
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.playSound = this.playSound.bind(this);
     this.addNote = this.addNote.bind(this);
     this.updateNote = this.updateNote.bind(this);
     this.playAll = this.playAll.bind(this);
+
     this.state = {
       notes: [
-        {pitch: 'A4', duration: 300},
-        {pitch: 'C5', duration: 300},
-        {pitch: 'E5', duration: 300},
+        {pitch: 'A4', duration: 0.25},
+        {pitch: 'C5', duration: 0.25},
+        {pitch: 'E5', duration: 0.25},
       ],
       playing: false,
       synth: 'triangle',
+      bpm: 120,
     };
   }
 
-  updateNote(idx) {
+  updateNote(idx, propertyName) {
     return (e) => {
       const {notes} = this.state;
       this.setState({
         notes: notes.map((note, i) => {
           return idx === i
-            ? Object.assign(note, {[e.target.name]: e.target.value})
+            ? Object.assign(note, {[propertyName]: e.target.value})
             : note;
         }),
       });
@@ -41,10 +44,12 @@ class App extends Component {
   }
 
   addNote() {
-    this.setState({notes: this.state.notes.concat([{duration: 300, pitch: 'A4'}])});
+    this.setState({notes: this.state.notes.concat([{duration: 0.25, pitch: 'A4'}])});
   }
 
   playSound({pitch, duration, delay = 0}) {
+    duration = (this.state.bpm / 60) * 1000 * duration;
+    console.log(duration)
     return new Promise((resolve, reject) => {
       const s = synth[this.state.synth];
       s.play({pitch, wait: delay});
@@ -68,10 +73,17 @@ class App extends Component {
     return (
       <div className="App">
         <label>
+          BPM:
+          <input
+            onChange={e => this.setState({bpm: e.target.value})}
+            value={this.state.bpm}
+            type='number' />
+        </label>
+        <label>
           Synth:
           <select value={this.state.synth} onChange={e => this.setState({synth: e.target.value})}>
             {Object.keys(synth).map((synthName, i) => {
-            return <option key={i}>{synthName}</option>;
+              return <option key={i}>{synthName}</option>;
             })}
           </select>
         </label>
@@ -79,10 +91,11 @@ class App extends Component {
         {this.state.notes.map((note, i) => {
           return <Note key={i}
             {...note}
+            index={i}
             play={this.playSound}
             deleteNote={() => this.deleteNote(i)}
-            updatePitch={this.updateNote(i)}
-            updateDuration={this.updateNote(i)} />;
+            updatePitch={this.updateNote(i, 'pitch')}
+            updateDuration={this.updateNote(i, 'duration')} />;
         })}
         <button onClick={this.addNote}>Add Note</button>
       </div>
