@@ -19,6 +19,7 @@ class App extends Component {
         {pitch: 'E5', duration: 300},
       ],
       playing: false,
+      synth: 'triangle',
     };
   }
 
@@ -63,9 +64,10 @@ class App extends Component {
   playSound({pitch, duration, delay = 0}) {
     return new Promise((resolve, reject) => {
       console.log('playSound promise!');
-      synth.sine.play({pitch, wait: delay});
+      const s = synth[this.state.synth];
+      s.play({pitch, wait: delay});
       setTimeout(() => {
-        synth.sine.stop();
+        s.stop();
         resolve();
       }, duration);
     });
@@ -83,6 +85,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <label>
+          Synth:
+          <select value={this.state.synth} onChange={e => this.setState({synth: e.target.value})}>
+            {Object.keys(synth).map((synthName, i) => {
+            return <option key={i}>{synthName}</option>;
+            })}
+          </select>
+        </label>
         <button disabled={this.state.playing} onClick={this.playAll}>Play</button>
         {this.state.notes.map((note, i) => {
           return <Note key={i}
