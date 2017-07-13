@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Note from './Note';
 import synth from './synth';
+import 'zgulde-lib';
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class App extends Component {
         {pitch: 'C5', duration: 300},
         {pitch: 'E5', duration: 300},
       ],
+      playing: false,
     };
   }
 
@@ -33,6 +34,12 @@ class App extends Component {
         }),
       });
     };
+  }
+
+  deleteNote(id) {
+    this.setState({
+      notes: this.state.notes.dropIf((_, i) => id === i),
+    });
   }
 
   updateDuration(idx) {
@@ -78,10 +85,11 @@ class App extends Component {
     console.log(this.state.notes);
     return (
       <div className="App">
-        <button onClick={this.playAll}>Play</button>
+        <button disabled={this.state.playing} onClick={this.playAll}>Play</button>
         {this.state.notes.map((note, i) => {
           return <Note key={i}
             {...note}
+            deleteNote={() => this.deleteNote(i)}
             updatePitch={this.updatePitch(i)}
             updateDuration={this.updateDuration(i)} />;
         })}

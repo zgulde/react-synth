@@ -1,9 +1,10 @@
 import React from 'react';
+import './Note.css';
 
 const Note = (props) => {
   console.log(props)
   return (
-    <div>
+    <div className='Note'>
       <label>
         Note
         <select onChange={props.updatePitch} value={props.pitch}>
@@ -167,6 +168,7 @@ const Note = (props) => {
         Duration
         <input onChange={props.updateDuration} value={props.duration} type='number' />
       </label>
+      <button onClick={props.deleteNote}>Delete</button>
     </div>
   );
 };
